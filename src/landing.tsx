@@ -1,6 +1,62 @@
 import { useState } from "react";
 import { motion, AnimatePresence, type Variants } from "framer-motion";
 import { Menu, X, ArrowRight } from "lucide-react";
+import {
+    Carousel,
+    CarouselContent,
+    CarouselNavigation,
+    CarouselIndicator,
+    CarouselItem
+} from "./components/Carousel";
+import { CircularTestimonials } from "./components/CircularTestimonials";
+
+const SERVICES_DATA = [
+    {
+        id: "01",
+        title: "Haircuts & Styling",
+        desc: "Tăieturi de precizie și coafuri adaptate stilului tău personal. Lasă-te pe mâna stiliștilor noștri pentru un look impecabil.",
+        img: "/service-haircut.png"
+    },
+    {
+        id: "02",
+        title: "Culoare & Balayage",
+        desc: "Magie pură pentru părul tău. Folosim tehnici avansate și culori vibrante pentru a crea nuanțe naturale și pline de viață.",
+        img: "/service-color.png"
+    },
+    {
+        id: "03",
+        title: "Tratamente & Răsfăț",
+        desc: "Revitalizează-ți părul cu tratamente profunde de hidratare. Un moment de relaxare absolută la scafă, cu produse premium.",
+        img: "/service-treatment.png"
+    },
+    {
+        id: "04",
+        title: "Nail Art",
+        desc: "Unghii pur și simplu perfecte. De la manichiura clasică la designuri complexe, îți îngrijim mâinile la cele mai înalte standarde.",
+        img: "/Screenshot_4.png"
+    }
+];
+
+const TESTIMONIALS_DATA = [
+    {
+        name: "Andreea Marin",
+        designation: "Clientă Fidelă • Vopsit Balayage",
+        quote: "Am venit la Flori pentru un balayage după ce părul meu fusese deteriorat în altă parte. Ce a reușit să facă este pură artă! Nuanța este extrem de naturală, iar părul strălucește și se simte atât de fin. Cu siguranță am găsit salonul ideal.",
+        src: "/service-color.png"
+    },
+    {
+        name: "Raluca Popescu",
+        designation: "Clientă Fidelă • Tuns & Coafat",
+        quote: "De fiecare dată când vin la MonisLine plec simțindu-mă spectaculos. Echipa este minunată, atmosfera este caldă și relaxantă, iar produsele folosite sunt clar premium. Tăietura de precizie a rezistat perfect luni de zile.",
+        src: "/service-haircut.png"
+    },
+    {
+        name: "Simona Ionescu",
+        designation: "Clientă Fidelă • Manichiură Slim & Nail Art",
+        quote: "Vera este absolut genială la nail art! Unghiile mele n-au arătat niciodată atât de subțiri, naturale și îngrijite. Iar designul pe care l-a pictat manual a atras doar complimente. Recomand cu toată inima!",
+        src: "/Screenshot_4.png"
+    }
+];
 
 export default function Landing() {
     const [isMobileMenuOpen, setIsMobileMenuOpen] = useState(false);
@@ -20,25 +76,40 @@ export default function Landing() {
 
     return (
         <div className="min-h-screen bg-[#f4efe8] text-[#1a1a1a] selection:bg-[#3b281f] selection:text-white" style={{ fontFamily: "'Montserrat', sans-serif" }}>
-            {/* Navigation */}
-            <nav className="px-6 py-6 md:py-8 flex justify-between items-center relative z-50">
-                <div className="hidden md:flex gap-8 text-xs tracking-widest uppercase font-medium">
+            {/* Navigation (Desktop Only) */}
+            <nav className="hidden md:flex px-6 py-8 justify-between items-center relative z-50">
+                <div className="flex gap-8 text-xs tracking-widest uppercase font-medium">
                     <a className="hover:opacity-70 transition-opacity" href="#acasa">Acasă</a>
                     <a className="hover:opacity-70 transition-opacity" href="#servicii">Servicii</a>
                     <a className="hover:opacity-70 transition-opacity" href="#despre-noi">Despre Noi</a>
                 </div>
 
-                {/* Mobile Menu Toggle */}
-                <button
-                    className="md:hidden z-50 p-2"
-                    onClick={() => setIsMobileMenuOpen(!isMobileMenuOpen)}
-                >
-                    {isMobileMenuOpen ? <X size={24} /> : <Menu size={24} />}
-                </button>
-
-                <div className="hidden md:flex gap-8 text-xs tracking-widest uppercase font-medium">
+                <div className="flex gap-8 text-xs tracking-widest uppercase font-medium">
                     <a className="hover:opacity-70 transition-opacity" href="#contact">Contact</a>
                     <a className="hover:opacity-70 transition-opacity" href="#contact">Locație</a>
+                </div>
+            </nav>
+
+            {/* Logo & Mobile Navigation Header */}
+            <header id="acasa" className="py-6 md:py-4 mb-4 md:mb-8 px-6 relative z-50">
+                <div className="max-w-screen-2xl mx-auto flex items-center justify-center relative">
+                    <motion.div
+                        initial={{ opacity: 0, scale: 0.95 }}
+                        animate={{ opacity: 1, scale: 1 }}
+                        transition={{ duration: 0.8, ease: "easeOut" }}
+                        className="text-[clamp(2.5rem,8vw,8rem)] leading-none tracking-wider font-semibold uppercase"
+                        style={{ fontFamily: "'Cormorant Garamond', serif" }}
+                    >
+                        MonisLine
+                    </motion.div>
+
+                    {/* Mobile Menu Toggle (On the exact same row/level as Logo) */}
+                    <button
+                        className="md:hidden absolute right-0 top-1/2 -translate-y-1/2 z-50 p-2"
+                        onClick={() => setIsMobileMenuOpen(!isMobileMenuOpen)}
+                    >
+                        {isMobileMenuOpen ? <X size={24} /> : <Menu size={24} />}
+                    </button>
                 </div>
 
                 {/* Mobile Menu Overlay */}
@@ -58,52 +129,55 @@ export default function Landing() {
                         </motion.div>
                     )}
                 </AnimatePresence>
-            </nav>
-
-            {/* Logo Section */}
-            <header id="acasa" className="text-center py-4 mb-4 md:mb-8 px-4">
-                <motion.div
-                    initial={{ opacity: 0, scale: 0.95 }}
-                    animate={{ opacity: 1, scale: 1 }}
-                    transition={{ duration: 0.8, ease: "easeOut" }}
-                    className="text-[clamp(2.5rem,8vw,8rem)] leading-none tracking-wider font-semibold uppercase"
-                    style={{ fontFamily: "'Cormorant Garamond', serif" }}
-                >
-                    MonisLine
-                </motion.div>
             </header>
 
             {/* Hero Section */}
-            <section className="relative w-full h-[70vh] md:h-[80vh] min-h-[500px] md:min-h-[600px] flex flex-col md:flex-row group overflow-hidden bg-[#f4efe8]">
+            <section className="relative w-full h-[70vh] md:h-[80vh] min-h-[500px] md:min-h-[600px] flex flex-row group overflow-hidden bg-[#f4efe8]">
                 {/* Left Image */}
                 <motion.div
                     initial={{ opacity: 0, x: -50 }}
                     animate={{ opacity: 1, x: 0 }}
                     transition={{ duration: 1 }}
-                    className="w-full h-1/2 md:w-1/2 md:h-full bg-cover bg-center grayscale opacity-55 transition-all duration-700"
-                    style={{ backgroundImage: "url('/c3576a8a-78f3-4fd6-b46c-abf698b8ab1d (1).png')" }}
+                    className="w-1/2 h-full bg-cover bg-center opacity-80 transition-all duration-700"
+                    style={{ backgroundImage: "url('/hero-left.png')" }}
                 />
                 {/* Right Image */}
                 <motion.div
                     initial={{ opacity: 0, x: 50 }}
                     animate={{ opacity: 1, x: 0 }}
                     transition={{ duration: 1 }}
-                    className="w-full h-1/2 md:w-1/2 md:h-full bg-cover bg-center grayscale opacity-55 transition-all duration-700"
-                    style={{ backgroundImage: "url('/c94eec4b-1e14-47ab-b22e-42ff4e8663ee (1).png')" }}
+                    className="w-1/2 h-full bg-cover bg-center opacity-80 transition-all duration-700"
+                    style={{ backgroundImage: "url('/hero-right.png')" }}
                 />
 
                 {/* Hero Content Overlay */}
-                <div className="absolute inset-0 flex flex-col items-center justify-center text-center p-4 md:p-6 bg-transparent">
+                <div className="absolute inset-0 flex flex-col items-center justify-center text-center p-4 md:p-6">
+                    {/* Radial gradient halo for text readability */}
+                    <div
+                        className="absolute inset-0 pointer-events-none"
+                        style={{
+                            background: "radial-gradient(ellipse 70% 60% at 50% 50%, rgba(244,239,232,0.45) 0%, rgba(244,239,232,0.15) 40%, transparent 70%)",
+                        }}
+                    />
                     <motion.div
                         initial={{ opacity: 0, y: 30 }}
                         animate={{ opacity: 1, y: 0 }}
                         transition={{ duration: 0.8, delay: 0.3 }}
-                        className="max-w-3xl mx-4 text-black"
+                        className="max-w-3xl mx-4 text-[#1a1a1a] relative z-10"
                     >
-                        <p className="text-xs md:text-sm mb-4 md:mb-2 font-medium tracking-[0.1em] uppercase opacity-90 -translate-x-2 md:-translate-x-2">
+                        <p
+                            className="text-xs md:text-sm mb-4 md:mb-2 font-medium tracking-[0.1em] uppercase"
+                            style={{ textShadow: "0 0 12px rgba(244,239,232,0.8), 0 0 24px rgba(244,239,232,0.5)" }}
+                        >
                             The Art of Hair [ Redefined ]
                         </p>
-                        <h1 className="text-4xl md:text-5xl lg:text-6xl font-extrabold mb-8 md:mb-8 tracking-tight leading-[1.1]" style={{ fontFamily: "'Montserrat', sans-serif" }}>
+                        <h1
+                            className="text-4xl md:text-5xl lg:text-6xl font-extrabold mb-8 md:mb-8 tracking-tight leading-[1.1]"
+                            style={{
+                                fontFamily: "'Montserrat', sans-serif",
+                                textShadow: "0 0 16px rgba(244,239,232,0.9), 0 1px 2px rgba(244,239,232,0.6)",
+                            }}
+                        >
                             SERVICII DE<br />ÎNFRUMUSEȚARE ÎN<br />BUCUREȘTI
                         </h1>
                         <motion.a
@@ -160,39 +234,15 @@ export default function Landing() {
                     </h2>
                 </motion.div>
 
+                {/* Desktop Grid (Hidden on Mobile) */}
                 <motion.div
                     initial="hidden"
                     whileInView="visible"
                     viewport={{ once: true, margin: "-50px" }}
                     variants={staggerContainer}
-                    className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-8 md:gap-6 mb-16"
+                    className="hidden md:grid md:grid-cols-4 gap-8 md:gap-6 mb-16"
                 >
-                    {[
-                        {
-                            id: "01",
-                            title: "Haircuts & Styling",
-                            desc: "Tăieturi de precizie și coafuri adaptate stilului tău personal. Lasă-te pe mâna stiliștilor noștri pentru un look impecabil.",
-                            img: "https://lh3.googleusercontent.com/aida/ADBb0uiNmudmqOEtNNuWL6R49Gyva9NOF8OI12FnSb3-8CeHeXcZyjdJEt61nl1z_AXs4HM4oGGWVkMe1FUq9B1VEYCZDiYwfmd17nTHkMwyiuCB1R3BlZ32GQpdWsO0800jdh89NFrmIlfUDCWy1AG5qPWns-8SMYD-_a22b16mbQ9y7eFjMu3FrNmsV3SL7KPqlerCgTv30v0KD5H9wcDbLXTSal1y4pUZ9uf9uEJ7EH-DpjCeowmW9NNh1JqiFDhbSDRy_mmogLRfzPA"
-                        },
-                        {
-                            id: "02",
-                            title: "Culoare & Balayage",
-                            desc: "Magie pură pentru părul tău. Folosim tehnici avansate și culori vibrante pentru a crea nuanțe naturale și pline de viață.",
-                            img: "https://lh3.googleusercontent.com/aida/ADBb0uijErSl9s2plskVe59OK3TUakNoXKPsRbHKHNwlSy5OIyjW-9HlcTGyE-05rnu4Dt4FWWsk6kcSIKYAul5gArxAsW-U7iFzflcDJ66rbd_nNU0hFvyxKe4cYHKLyPfsQ7top8LYR7InFJooV8O376jZqlXOHmNK_XQH6ZTeSFHQFVHeiCzLDuSv2DxTcNgMPZX6yf1-UKJtmZg-UhLa5vQ47v9YcsDMPc08Nxsr8DfVJ7AkFJmzxgGmHnjOmTZShtMteFReZeP14w"
-                        },
-                        {
-                            id: "03",
-                            title: "Tratamente & Răsfăț",
-                            desc: "Revitalizează-ți părul cu tratamente profunde de hidratare. Un moment de relaxare absolută la scafă, cu produse premium.",
-                            img: "https://lh3.googleusercontent.com/aida/ADBb0ugykDCZ4ZYA2C0ATJjZ5hdYAMoMMjBiHwPUSC82O8YYfnVcJMmcQ9zeIvO1z9X4IUHz1CYMULFFHEBDBZ9oV6pHWsS01rQ0ATw9QoXa4_3BsKHhCFFWitZUJwe_miSI_l2Wn_xKKJxxH_lHqCEPsThCn7g3MG3SSKE598u485V5TpR5k_ueEjmLSMjEnl4d8PbE4mJ8blYZM2xO-VDcNpEtlwGM8EAy-xUfPwEekDiBC-PBafKuFREWW3u2RcbK3RntCN0j9_W3cvA"
-                        },
-                        {
-                            id: "04",
-                            title: "Nail Art",
-                            desc: "Unghii pur și simplu perfecte. De la manichiura clasică la designuri complexe, îți îngrijim mâinile la cele mai înalte standarde.",
-                            img: "/Screenshot_4.png"
-                        }
-                    ].map((service, index) => (
+                    {SERVICES_DATA.map((service, index) => (
                         <motion.div
                             key={index}
                             variants={fadeIn}
@@ -205,7 +255,7 @@ export default function Landing() {
                                     whileHover={{ scale: 1.05 }}
                                     transition={{ duration: 0.6, ease: "easeOut" }}
                                     alt={service.title}
-                                    className="w-full h-full object-cover grayscale group-hover:grayscale-0 transition-all duration-700"
+                                    className="w-full h-full object-cover transition-all duration-700"
                                     src={service.img}
                                 />
                             </div>
@@ -219,6 +269,46 @@ export default function Landing() {
                     ))}
                 </motion.div>
 
+                {/* Mobile Carousel (Hidden on Desktop) */}
+                <div className="block md:hidden mb-16 relative px-2">
+                    <Carousel className="w-full">
+                        <div className="overflow-hidden">
+                            <CarouselContent>
+                                {SERVICES_DATA.map((service, index) => (
+                                    <CarouselItem key={index} className="px-2">
+                                        <div className="flex flex-col cursor-pointer">
+                                            <span className="text-xs text-gray-500 mb-3 font-medium tracking-wider">[{service.id}]</span>
+                                            <div className="aspect-[3/4] overflow-hidden mb-5 bg-gray-200 relative">
+                                                <div className="absolute inset-0 bg-black/10 transition-colors z-10 duration-500" />
+                                                <img
+                                                    alt={service.title}
+                                                    className="w-full h-full object-cover"
+                                                    src={service.img}
+                                                />
+                                            </div>
+                                            <h3 className="text-2xl font-bold uppercase mb-3" style={{ fontFamily: "'Cormorant Garamond', serif" }}>
+                                                {service.title}
+                                            </h3>
+                                            <p className="text-sm leading-relaxed text-gray-600">
+                                                {service.desc}
+                                            </p>
+                                        </div>
+                                    </CarouselItem>
+                                ))}
+                            </CarouselContent>
+                        </div>
+                        <CarouselNavigation 
+                            alwaysShow 
+                            className="absolute left-0 right-0 w-full top-[37%] -translate-y-1/2 flex justify-between px-3 pointer-events-none z-20" 
+                            classNameButton="bg-transparent border-none p-0 shadow-none stroke-black [&_svg]:drop-shadow-[0_1px_4px_rgba(255,255,255,0.9)] w-10 h-10 flex items-center justify-center" 
+                        />
+                        <CarouselIndicator 
+                            className="relative mt-12 mb-2" 
+                            classNameButton="bg-black/20 [&.bg-\[\#1a1a1a\]]:bg-black [&.bg-zinc-950]:bg-black [&.bg-zinc-50]:bg-black" 
+                        />
+                    </Carousel>
+                </div>
+
                 <div className="text-center mt-8">
                     <motion.a
                         whileHover={{ scale: 1.02, backgroundColor: "#000" }}
@@ -226,9 +316,33 @@ export default function Landing() {
                         className="inline-block bg-[#3b281f] text-white text-xs tracking-widest uppercase px-8 py-5 transition-colors"
                         href="#"
                     >
-                        Vezi Lista Completă de Prețuri
+                        Vezi Lista Completă de Servicii
                     </motion.a>
                 </div>
+            </section>
+
+            {/* Testimonials Section */}
+            <section id="testimoniale" className="max-w-screen-2xl mx-auto px-6 pb-20 md:pb-32 border-t border-[#3b281f]/5 pt-20 md:pt-32">
+                <motion.div
+                    initial={{ opacity: 0, y: 20 }}
+                    whileInView={{ opacity: 1, y: 0 }}
+                    viewport={{ once: true }}
+                    className="mb-12 md:mb-20 text-center"
+                >
+                    <p className="text-xs md:text-sm mb-2 font-medium tracking-widest text-[#3b281f] uppercase">[ Recenzii Clienți ]</p>
+                    <h2 className="text-4xl md:text-6xl font-bold uppercase" style={{ fontFamily: "'Cormorant Garamond', serif" }}>
+                        Experiențe MonisLine
+                    </h2>
+                </motion.div>
+
+                <motion.div
+                    initial={{ opacity: 0, y: 30 }}
+                    whileInView={{ opacity: 1, y: 0 }}
+                    viewport={{ once: true, margin: "-100px" }}
+                    transition={{ duration: 0.8 }}
+                >
+                    <CircularTestimonials testimonials={TESTIMONIALS_DATA} />
+                </motion.div>
             </section>
 
             {/* Unified Contact & Footer Section */}
