@@ -46,51 +46,46 @@ export default function Navbar({ currentView, onNavigate }: NavbarProps) {
                 <div className="hidden md:flex items-center gap-8 text-xs tracking-widest uppercase font-medium">
                     <button
                         onClick={() => handleNavClick("home")}
-                        className={`cursor-pointer transition-opacity ${
-                            currentView === "home"
+                        className={`cursor-pointer transition-opacity ${currentView === "home"
                                 ? "opacity-100 font-semibold border-b border-primary pb-0.5"
                                 : "hover:opacity-70 opacity-80"
-                        }`}
+                            }`}
                     >
                         Acasă
                     </button>
                     <button
                         onClick={() => handleNavClick("services")}
-                        className={`cursor-pointer transition-opacity ${
-                            currentView === "services"
+                        className={`cursor-pointer transition-opacity ${currentView === "services"
                                 ? "opacity-100 font-semibold border-b border-primary pb-0.5"
                                 : "hover:opacity-70 opacity-80"
-                        }`}
+                            }`}
                     >
                         Servicii
                     </button>
                     <button
                         onClick={() => handleNavClick("courses")}
-                        className={`cursor-pointer transition-opacity ${
-                            currentView === "courses"
+                        className={`cursor-pointer transition-opacity ${currentView === "courses"
                                 ? "opacity-100 font-semibold border-b border-primary pb-0.5"
                                 : "hover:opacity-70 opacity-80"
-                        }`}
+                            }`}
                     >
                         Cursuri
                     </button>
                     <button
                         onClick={() => handleNavClick("about")}
-                        className={`cursor-pointer transition-opacity ${
-                            currentView === "about"
+                        className={`cursor-pointer transition-opacity ${currentView === "about"
                                 ? "opacity-100 font-semibold border-b border-primary pb-0.5"
                                 : "hover:opacity-70 opacity-80"
-                        }`}
+                            }`}
                     >
                         Despre Noi
                     </button>
                     <button
                         onClick={() => handleNavClick("contact")}
-                        className={`cursor-pointer transition-opacity ${
-                            currentView === "contact"
+                        className={`cursor-pointer transition-opacity ${currentView === "contact"
                                 ? "opacity-100 font-semibold border-b border-primary pb-0.5"
                                 : "hover:opacity-70 opacity-80"
-                        }`}
+                            }`}
                     >
                         Contact
                     </button>

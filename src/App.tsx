@@ -60,7 +60,7 @@ function App() {
   const handleSubscribeNewsletter = (e: React.FormEvent) => {
     e.preventDefault();
     if (!newsletterEmail) return;
-    
+
     setNewsletterSubmitted(true);
     localStorage.setItem('newsletterSubscribed', 'true');
     setTimeout(() => {
@@ -224,7 +224,7 @@ function App() {
               </button>
 
               <h2 className="font-headline text-2xl text-primary font-semibold mb-6 pr-6">Programează o vizită</h2>
-              
+
               {bookingSubmitted ? (
                 <div className="bg-emerald-50 text-emerald-800 p-6 rounded-lg border border-emerald-200 font-body text-sm">
                   Solicitarea de rezervare a fost trimisă cu succes! Vă vom contacta în cel mai scurt timp posibil.
